@@ -18,5 +18,8 @@
   "bugs": {
     "url": "https://github.com/PriyanshK09/ChatApp/issues"
   },
-  "homepage": "https://github.com/PriyanshK09/ChatApp#readme"
+  "homepage": "https://github.com/PriyanshK09/ChatApp#readme",
+  "dependencies": {
+    "socket.io": "^4.7.5"
+  }
 }
