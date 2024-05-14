@@ -1,0 +1,54 @@
+<!-- public/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat App</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="user-list"></div>
+    <div id="chat"></div>
+    <input type="text" id="message-input" placeholder="Type a message...">
+    <button id="send-button">Send</button>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io();
+
+        // Event listener for receiving messages
+        socket.on('message', (data) => {
+            const { username, message } = data;
+            const chat = document.getElementById('chat');
+            const messageElement = document.createElement('div');
+            messageElement.innerText = `${username}: ${message}`;
+            chat.appendChild(messageElement);
+        });
+
+        // Event listener for updating the user list
+        socket.on('userList', (users) => {
+            const userList = document.getElementById('user-list');
+            userList.innerHTML = '';
+            users.forEach((user) => {
+                const userElement = document.createElement('div');
+                userElement.innerText = user;
+                userList.appendChild(userElement);
+            });
+        });
+
+        // Event listener for typing status
+        document.getElementById('message-input').addEventListener('input', () => {
+            socket.emit('typing', 'Someone is typing...');
+        });
+
+        // Event listener for sending messages
+        document.getElementById('send-button').addEventListener('click', () => {
+            const message = document.getElementById('message-input').value;
+            socket.emit('message', { username: 'User', message });
+            document.getElementById('message-input').value = '';
+        });
+    </script>
+</body>
+</html>
