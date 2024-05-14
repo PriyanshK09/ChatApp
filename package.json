@@ -1,16 +1,18 @@
 {
-  "name": "chatapp",
+  "name": "node-chat-app",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "A chat application using Node.js, Socket.IO, and MongoDB",
+  "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node app.js"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
+    "bcrypt": "^5.1.1",
+    "crypto": "^1.0.1",
     "express": "^4.19.2",
+    "http": "^0.0.1-security",
+    "mongoose": "^6.12.8",
+    "path": "^0.12.7",
     "socket.io": "^4.7.5"
   }
 }

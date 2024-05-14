@@ -1,54 +1,57 @@
-<!-- public/index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chat App</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div id="user-list"></div>
-    <div id="chat"></div>
-    <input type="text" id="message-input" placeholder="Type a message...">
-    <button id="send-button">Send</button>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="#" id="profile-btn">Profile</a></li>
+                <li><a href="#" id="friends-btn">Friends</a></li>
+                <li><a href="#" id="groups-btn">Groups</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section class="chat-container">
+            <h2>Chat</h2>
+            <input type="text" id="username" placeholder="Username">
+            <button id="join-btn">Join</button>
+            <ul id="chat-log"></ul>
+            <input type="text" id="message" placeholder="Type a message...">
+            <button id="send-btn">Send</button>
+            <p id="typing-status"></p>
+        </section>
+        <section class="profile-container" hidden>
+            <h2>Profile</h2>
+            <form>
+                <label for="name">Name:</label>
+                <input type="text" id="name" placeholder="Name">
+                <label for="status">Status:</label>
+                <input type="text" id="status" placeholder="Status">
+                <button id="update-profile-btn">Update</button>
+            </form>
+        </section>
+        <section class="friends-container" hidden>
+            <h2>Friends</h2>
+            <ul id="friends-list"></ul>
+            <input type="text" id="friend-username" placeholder="Add friend by username">
+            <button id="add-friend-btn">Add</button>
+        </section>
+        <section class="groups-container" hidden>
+            <h2>Groups</h2>
+            <ul id="groups-list"></ul>
+            <input type="text" id="group-code" placeholder="Join group by code">
+            <button id="join-group-btn">Join</button>
+            <button id="create-group-btn">Create Group</button>
+        </section>
+    </main>
 
     <script src="/socket.io/socket.io.js"></script>
-    <script>
-        const socket = io();
-
-        // Event listener for receiving messages
-        socket.on('message', (data) => {
-            const { username, message } = data;
-            const chat = document.getElementById('chat');
-            const messageElement = document.createElement('div');
-            messageElement.innerText = `${username}: ${message}`;
-            chat.appendChild(messageElement);
-        });
-
-        // Event listener for updating the user list
-        socket.on('userList', (users) => {
-            const userList = document.getElementById('user-list');
-            userList.innerHTML = '';
-            users.forEach((user) => {
-                const userElement = document.createElement('div');
-                userElement.innerText = user;
-                userList.appendChild(userElement);
-            });
-        });
-
-        // Event listener for typing status
-        document.getElementById('message-input').addEventListener('input', () => {
-            socket.emit('typing', 'Someone is typing...');
-        });
-
-        // Event listener for sending messages
-        document.getElementById('send-button').addEventListener('click', () => {
-            const message = document.getElementById('message-input').value;
-            socket.emit('message', { username: 'User', message });
-            document.getElementById('message-input').value = '';
-        });
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
