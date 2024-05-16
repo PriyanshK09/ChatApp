@@ -25,14 +25,22 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
+// Socket.IO event handlers
 io.on('connection', (socket) => {
-  console.log('New client connected');
-  socket.on('disconnect', () => {
-    console.log('Client disconnected');
+  console.log('A user connected');
+
+  // Handle sending messages
+  socket.on('sendMessage', (data) => {
+    const { content, receiver } = data;
+    // Implement the logic to save the message to the database
+    console.log(`Received message: ${content} for receiver: ${receiver}`);
+    // You can emit the message to the receiver's socket here
+    io.emit('message', data);
   });
 
-  socket.on('sendMessage', (message) => {
-    io.emit('message', message);
+  // Handle disconnection
+  socket.on('disconnect', () => {
+    console.log('A user disconnected');
   });
 });
 

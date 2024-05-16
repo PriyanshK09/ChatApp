@@ -1,25 +1,67 @@
 body {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
   margin: 0;
   font-family: Arial, sans-serif;
   background-color: #f4f4f4;
 }
 
-#app {
-  display: flex;
-  width: 80%;
-  height: 80%;
-  border: 1px solid #ccc;
+.container {
+  max-width: 400px;
+  margin: 50px auto;
+  padding: 20px;
+  background-color: #fff;
   border-radius: 8px;
-  overflow: hidden;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
+.form-group {
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+input[type="email"],
+input[type="password"],
+input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  background-color: #1abc9c;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #16a085;
+}
+
+#logout-btn {
+  margin-top: 20px;
+  background-color: #e74c3c;
+}
+
+#logout-btn:hover {
+  background-color: #c0392b;
+}
+
+#app {
+  display: flex;
+  height: 100vh;
+}
+
 #sidebar {
-  width: 30%;
+  flex: 1;
   background-color: #2c3e50;
   color: #ecf0f1;
   padding: 20px;
@@ -28,6 +70,10 @@ body {
 
 #sidebar h2 {
   margin-top: 0;
+}
+
+#user-info {
+  margin-bottom: 20px;
 }
 
 #friend-list {
@@ -46,15 +92,14 @@ body {
 }
 
 #friend-username {
-  width: 100%;
+  width: calc(100% - 82px);
+  margin-right: 10px;
   padding: 10px;
-  margin: 10px 0;
-  border: none;
+  border: 1px solid #ccc;
   border-radius: 4px;
 }
 
 #add-friend-button {
-  width: 100%;
   padding: 10px;
   background-color: #1abc9c;
   border: none;
@@ -68,7 +113,7 @@ body {
 }
 
 #chat-container {
-  width: 70%;
+  flex: 3;
   display: flex;
   flex-direction: column;
   background-color: white;

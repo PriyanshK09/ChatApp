@@ -1,8 +1,9 @@
 const User = require('../models/User');
 
+// Add friend function
 exports.addFriend = async (req, res) => {
-  const { friendUsername } = req.body;
   try {
+    const { friendUsername } = req.body;
     const user = await User.findById(req.user.id);
     const friend = await User.findOne({ username: friendUsername });
 
@@ -23,9 +24,10 @@ exports.addFriend = async (req, res) => {
   }
 };
 
+// Remove friend function
 exports.removeFriend = async (req, res) => {
-  const { friendId } = req.body;
   try {
+    const { friendId } = req.body;
     const user = await User.findById(req.user.id);
     user.friends = user.friends.filter(friend => friend.toString() !== friendId);
     await user.save();
@@ -36,6 +38,7 @@ exports.removeFriend = async (req, res) => {
   }
 };
 
+// Get friends function
 exports.getFriends = async (req, res) => {
   try {
     const user = await User.findById(req.user.id).populate('friends', ['username']);

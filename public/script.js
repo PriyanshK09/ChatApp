@@ -18,15 +18,6 @@ const renderFriends = (friends) => {
   });
 };
 
-// Add click event listener for friend list items
-friendList.addEventListener('click', (e) => {
-  if (e.target.tagName === 'LI') {
-    const friendId = e.target.dataset.friendId;
-    // Implement logic to open DM with the selected friend
-    console.log('Clicked on friend with ID:', friendId);
-  }
-});
-
 // Fetch friends on page load
 const fetchFriends = async () => {
   try {
@@ -42,13 +33,13 @@ const fetchFriends = async () => {
   }
 };
 
-// Modify loginOrRegister function in public/script.js
-const loginOrRegister = async () => {
-  const email = prompt('Enter your email:');
-  const password = prompt('Enter your password:');
+// Login function
+const login = async () => {
+  const email = document.getElementById('email-input').value;
+  const password = document.getElementById('password-input').value;
 
   try {
-    const res = await fetch('/api/auth', {
+    const res = await fetch('/api/auth/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -72,22 +63,31 @@ const loginOrRegister = async () => {
   }
 };
 
-// Call loginOrRegister function on page load
-loginOrRegister();
+// Attach click event listener to login button
+document.getElementById('login-button').addEventListener('click', login);
 
-sendButton.addEventListener('click', () => {
+// Call login function on page load
+login();
+
+// Send message function
+const sendMessage = () => {
   const message = messageInput.value;
   socket.emit('sendMessage', message);
   messageInput.value = '';
-});
+};
 
+// Attach click event listener to send button
+sendButton.addEventListener('click', sendMessage);
+
+// Receive message from server
 socket.on('message', (message) => {
   const messageElement = document.createElement('div');
   messageElement.textContent = message;
   chatBox.appendChild(messageElement);
 });
 
-addFriendButton.addEventListener('click', async () => {
+// Add friend function
+const addFriend = async () => {
   const friendUsername = friendUsernameInput.value;
   try {
     const res = await fetch('/api/friend/add', {
@@ -110,9 +110,12 @@ addFriendButton.addEventListener('click', async () => {
   } catch (err) {
     console.error(err);
   }
-});
+};
 
-// Function to remove a friend
+// Attach click event listener to add friend button
+addFriendButton.addEventListener('click', addFriend);
+
+// Remove friend function
 const removeFriend = async (friendId) => {
   try {
     const res = await fetch('/api/friend/remove', {
