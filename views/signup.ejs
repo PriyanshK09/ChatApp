@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include("./partials/head.ejs") %>
+    <link rel="stylesheet" href="./styles/signup/style.css" />
+    <script src="./js/signup.js" defer></script>
+    <script src="http://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  </head>
+  <body>
+    <main>
+      <%- include("./partials/nav.ejs") %>
+      <div class="content">
+        <div class="sign_up_page_content_container">
+          <div class="sign_up_form">
+            <h2 class="form_header">Sign Up</h2>
+            <form action="/signup" enctype="multipart/form-data" method="post" class="fields_container">
+              <div class="single_field">
+                <input autofocus name="email" type="text" placeholder="Enter your email" />
+                <p class="error email_error"></p>
+              </div>
+              <div class="single_field">
+                <input name="name" type="text" placeholder="Enter your name" />
+                <p class="error name_error"></p>
+              </div>
+              <div class="single_field">
+                <input type="password" name="password" placeholder="Enter your password" />
+                <p class="error password_error"></p>
+              </div>
+              <div class="single_field">
+                <label for="file-upload">
+                  <input name="avatar" style="display: none" id="file-upload" type="file" />
+                  <span style="display: inline-block">Upload Avatar</span>
+                  <p class="error avatar_error"></p>
+                </label>
+              </div>
+              <div class="single_field">
+                <button class="submit_button" type="submit">Register Account</button>
+                <p class="error common_error"></p>
+              </div>
+            </form>
+
+            <p class="form_footer">Already have an account? <a href="/">Login</a></p>
+          </div>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

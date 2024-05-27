@@ -1,26 +1,32 @@
 {
-  "name": "chatapp",
+  "name": "chat-application",
   "version": "1.0.0",
-  "description": "",
-  "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "NODE_ENV=development nodemon app.js -e js,ejs",
+    "start": "NODE_ENV=production node app.js"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "description": "A realtime chat application using Node and socket.io",
+  "main": "app.js",
+  "author": "PriyanshK09",
+  "license": "MIT",
+  "private": false,
   "dependencies": {
-    "bcrypt": "^5.1.1",
-    "bcryptjs": "^2.4.3",
-    "config": "^3.3.11",
+    "bcrypt": "^5.0.1",
+    "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
-    "dotenv": "^16.4.5",
-    "express": "^4.19.2",
-    "express-validator": "^7.0.1",
+    "dotenv": "^10.0.0",
+    "ejs": "^3.1.6",
+    "express": "^4.17.1",
+    "express-validator": "^6.11.1",
     "http": "^0.0.1-security",
-    "jsonwebtoken": "^9.0.2",
-    "jwt-decode": "^4.0.0",
-    "mongoose": "^8.3.5",
-    "socket.io": "^4.7.5"
+    "jsonwebtoken": "^8.5.1",
+    "moment": "^2.29.1",
+    "mongoose": "^6.0.10",
+    "multer": "^1.4.2",
+    "socket.io": "^4.3.1",
+    "validator": "^13.6.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.13"
   }
 }

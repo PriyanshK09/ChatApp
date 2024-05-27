@@ -1,0 +1,46 @@
+<nav>
+  <h2 class="nav_title">.Chatify()</h2>
+
+  <ul class="nav_links">
+    <% if (loggedInUser && loggedInUser.name) { %>
+    <li><a href="/inbox">Inbox</a></li>
+    <!-- <li><a style="cursor: pointer" onclick="logout()">Logout</a></li> -->
+    <li>
+      <% if (loggedInUser.avatar) { %>
+      <img src="./uploads/avatars/<%= loggedInUser.avatar %>" alt="<%= loggedInUser.name %> " />
+      <% } else { %>
+      <img src="./assets/nophoto.png" alt="<%= loggedInUser.name %> " />
+      <% } %>
+
+      <ul class="sub_list account_options">
+        <li onclick="manageAccount()">Manage Account</li>
+        <li onclick="logout()">Log into another account</li>
+      </ul>
+    </li>
+    <% } else { %>
+    <li><a href="/">Login</a></li>
+    <% } %>
+  </ul>
+</nav>
+<script>
+  async function logout() {
+    try {
+      const res = await fetch("/", { method: "DELETE" });
+      const { message } = await res.json();
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: message,
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      setTimeout(() => {
+        window.location.replace("/");
+      }, 1600);
+    } catch (err) {}
+  }
+
+  function manageAccount() {
+    window.location = "/settings";
+  }
+</script>

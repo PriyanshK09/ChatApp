@@ -1,0 +1,108 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+Mono&display=swap");
+.sign_up_page_content_container {
+  height: 100%;
+  display: -ms-grid;
+  display: grid;
+  place-items: center;
+}
+
+.sign_up_page_content_container .sign_up_form {
+  width: 100%;
+  max-width: 400px;
+  padding: 30px;
+  border-radius: 5px;
+  background: #1a1f29;
+  -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.419);
+          box-shadow: 0 5px 10px rgba(0, 0, 0, 0.419);
+}
+
+.sign_up_page_content_container .sign_up_form h2.form_header {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #95e6cb;
+  font-family: Noto Sans Mono;
+}
+
+.sign_up_page_content_container .sign_up_form form.fields_container {
+  width: 100%;
+}
+
+.sign_up_page_content_container .sign_up_form form.fields_container .single_field {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.sign_up_page_content_container .sign_up_form form.fields_container .single_field input,
+.sign_up_page_content_container .sign_up_form form.fields_container .single_field button,
+.sign_up_page_content_container .sign_up_form form.fields_container .single_field span {
+  width: 100%;
+  padding: 10px;
+  border-radius: 3px;
+  border: none;
+}
+
+.sign_up_page_content_container .sign_up_form form.fields_container .single_field input {
+  border: 2px solid #fff;
+}
+
+.sign_up_page_content_container .sign_up_form form.fields_container .single_field input:focus {
+  border-color: #95e6cb;
+}
+
+.sign_up_page_content_container .sign_up_form form.fields_container .single_field button,
+.sign_up_page_content_container .sign_up_form form.fields_container .single_field span {
+  background: #95e6cb;
+  border: none;
+  color: #fff;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+  padding: 10px;
+  cursor: pointer;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+.sign_up_page_content_container .sign_up_form form.fields_container .single_field button:hover,
+.sign_up_page_content_container .sign_up_form form.fields_container .single_field span:hover {
+  background: #30cf9a;
+}
+
+.sign_up_page_content_container .sign_up_form form.fields_container .single_field button:active,
+.sign_up_page_content_container .sign_up_form form.fields_container .single_field span:active {
+  -webkit-transform: scale(0.95);
+          transform: scale(0.95);
+}
+
+.sign_up_page_content_container .sign_up_form form.fields_container .single_field .submit_button:disabled {
+  cursor: not-allowed;
+  background: #3f5a52;
+}
+
+.sign_up_page_content_container .sign_up_form form.fields_container .single_field span {
+  cursor: pointer;
+  background: #f29e74;
+}
+
+.sign_up_page_content_container .sign_up_form form.fields_container .single_field span:hover {
+  background: #ee7d44;
+}
+
+.sign_up_page_content_container .sign_up_form form.fields_container .single_field .error {
+  display: none;
+  font-size: 0.8rem;
+  margin-top: 5px;
+  color: #f07178;
+}
+
+.sign_up_page_content_container .sign_up_form form.fields_container .single_field .error_input {
+  border-color: #f07178;
+}
+
+.sign_up_page_content_container .sign_up_form .form_footer {
+  text-align: center;
+}
+
+.sign_up_page_content_container .sign_up_form .form_footer a {
+  color: #f29e74;
+}
+/*# sourceMappingURL=style.css.map */

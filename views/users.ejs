@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include("./partials/head.ejs") %>
+    <link rel="stylesheet" href="./styles/users/style.css" />
+    <script src="http://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  </head>
+
+  <body>
+    <main>
+      <%- include("./partials/nav.ejs") %>
+      <div class="content">
+        <div class="users_page_content_container">
+          <h2 class="user_page_main_heading">Users Available in this website</h2>
+          <div class="users_table">
+            <table>
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Manage</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- if we have users how up all the user data -->
+                <% if(users && users.length){ %> <% users.forEach(function(user) { %>
+                <tr id="<%= user._id%>">
+                  <td class="name">
+                    <% if (user.avatar){ %>
+                    <img src="./uploads/avatars/<%=user.avatar%>" alt="<%= user.name %>" />
+                    <% } else { %>
+                    <img src="./assets/nophoto.png" alt="<%= user.name %>" />
+                    <% } %>
+                    <span> <%= user.name %> </span>
+                  </td>
+                  <td class="user_email"><%= user.email %></td>
+                  <td class="manage">
+                    <button onclick="deleteUser('<%=user._id%>')" class="delete_user">Delete</button>
+                  </td>
+                </tr>
+                <!-- if there is no user this block should be shown -->
+                <% }); %> <% } else{ %>
+                <tr>
+                  <td style="padding: 20px 0" colspan="3">No users found</td>
+                </tr>
+                <% } %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script>
+      async function deleteUser(userId) {
+        const res = await fetch(`/users/${userId}`, {
+          method: "DELETE",
+          headers: { "Content-Type": "application/json" },
+        });
+        const { message } = await res.json();
+
+        if (res.ok) {
+          document.getElementById(userId).remove();
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: message,
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
+      }
+    </script>
+  </body>
+</html>

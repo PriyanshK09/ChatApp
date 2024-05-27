@@ -1,0 +1,76 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+Mono&display=swap");
+
+@import "../var";
+@import "../mixin";
+
+.sign_up_page_content_container {
+  height: 100%;
+  display: grid;
+  place-items: center;
+  .sign_up_form {
+    width: 100%;
+    max-width: 400px;
+    padding: 30px;
+    border-radius: 5px;
+    background: $backgroundSecondary;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.419);
+    h2.form_header {
+      text-align: center;
+      margin-bottom: 20px;
+      color: $themeSecondary;
+      font-family: Noto Sans Mono;
+    }
+    form.fields_container {
+      width: 100%;
+      .single_field {
+        width: 100%;
+        margin-bottom: 10px;
+        input,
+        button,
+        span {
+          width: 100%;
+          padding: 10px;
+          border-radius: 3px;
+          border: none;
+        }
+        input {
+          border: 2px solid #fff;
+          &:focus {
+            border-color: $themeSecondary;
+          }
+        }
+        button,
+        span {
+          @include buttonStyle($themeSecondary, 10px, $themeSecondaryHover);
+          font-size: 0.9rem;
+        }
+        .submit_button:disabled {
+          cursor: not-allowed;
+          background: hsl(162, 18%, 30%);
+        }
+        span {
+          cursor: pointer;
+          background: $themeColor;
+          &:hover {
+            background: $themeHover;
+          }
+        }
+        .error {
+          display: none;
+          font-size: 0.8rem;
+          margin-top: 5px;
+          color: $errorColor;
+        }
+        .error_input {
+          border-color: $errorColor;
+        }
+      }
+    }
+    .form_footer {
+      text-align: center;
+      a {
+        color: $themeColor;
+      }
+    }
+  }
+}

@@ -1,0 +1,15 @@
+@mixin buttonStyle($themeColor, $padding, $themeHover) {
+  background: $themeColor;
+  border: none;
+  color: #fff;
+  transition: 0.3s;
+  padding: $padding;
+  cursor: pointer;
+  text-align: center;
+  &:hover {
+    background: $themeHover;
+  }
+  &:active {
+    transform: scale(0.95);
+  }
+}

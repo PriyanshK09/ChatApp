@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include("./partials/head.ejs") %>
+    <link rel="stylesheet" href="./styles/inbox/style.css" />
+    <script src="./js/inbox.js" defer></script>
+    <script src="./js/moment.js"></script>
+    <!-- Add Socket.IO client library -->
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://kit.fontawesome.com/585143586a.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+  <%- include("./partials/newChat.ejs") %>
+    <main>
+      <%- include("./partials/nav.ejs") %>
+        <div class="content">
+          <div class="inbox_content_container">
+            <div class="toggle_side_bar_button">
+              <button><i class="fas fa-chevron-right"></i></button>
+            </div>
+
+            <div class="sideBar">
+              <div class="closeSideBarButton">
+                <button><i class="fas fa-chevron-left"></i></button>
+              </div>
+
+              <div class="searchBar">
+                <input type="search" placeholder="Search Conversations" />
+              </div>
+
+              <div class="conversationsList">
+                <% if (data && data.length> 0) { %>
+                  <% data.forEach((conversation)=> { %>
+                    <% if (conversation.creator._id.toString()===loggedInUser._id.toString()) { %>
+                      <div id="<%= conversation._id %>" class="single_conversation"
+                        onclick="getMessages('<%= conversation._id %>', '<%= conversation.participant.name %>')">
+                        <div class="conversation_image">
+                          <% if (conversation.participant.avatar) { %>
+                            <img src="./uploads/avatars/<%= conversation.participant.avatar %>"
+                              alt="<%= conversation.participant.name %> " />
+                            <% } else { %>
+                              <img src="./assets/nophoto.png" alt="<%= conversation.participant.name %> " />
+                              <% } %>
+                        </div>
+                        <div class="conversation_details">
+                          <p class="username">
+                            <%= conversation.participant.name %>
+                          </p>
+                          <p class="lastSent">
+                            <%= moment(conversation.last_updated).fromNow() %>
+                          </p>
+                        </div>
+                      </div>
+                      <% } else { %>
+                        <div id="<%= conversation._id %>" class="single_conversation"
+                          onclick="getMessages('<%= conversation._id %>', '<%= conversation.creator.name %>')">
+                          <div class="conversation_image">
+                            <% if (conversation.creator.avatar) { %>
+                              <img src="./uploads/avatars/<%= conversation.creator.avatar %>"
+                                alt="<%= conversation.creator.name %> " />
+                              <% } else { %>
+                                <img src="./assets/nophoto.png" alt="<%= conversation.creator.name %> " />
+                                <% } %>
+                          </div>
+                          <div class="conversation_details">
+                            <p class="username">
+                              <%= conversation.creator.name %>
+                            </p>
+                            <p class="lastSent">
+                              <%= moment(conversation.last_updated).fromNow() %>
+                            </p>
+                          </div>
+                        </div>
+                        <% } %>
+                          <% }) %>
+                            <% } else { %>
+                              <div class="no_message_container">
+                                <div class="no_image">
+                                  <img src="./assets/no-conversations.svg" alt="Illustration" />
+                                </div>
+                                <h3 class="no_message">No Conversations</h3>
+                              </div>
+                              <% } %>
+              </div>
+
+              <div class="addNewConversation">
+                <button>Start new chat</button>
+              </div>
+            </div>
+
+            <div class="conversation">
+              <div class="topBar">
+                <div class="user_avatar_and_name">
+                  <div class="userAvatar"><img src="./assets/nophoto.png" alt="User name" /></div>
+                  <h3 class="username">Username</h3>
+                </div>
+                <div class="delete_button">
+                  <button><i class="far fa-trash-alt"></i></button>
+                </div>
+              </div>
+
+              <div class="messages"></div>
+
+              <form enctype="multipart/form-data" method="post" class="sendMessage">
+                <div class="sendImageButton">
+                  <label for="file-upload">
+                    <input id="file-upload" name="attachment" style="display: none;" type="file" multiple>
+                    <span><i class="far fa-images"></i></span>
+                  </label>
+                </div>
+                <div class="messageInput"><input type="text" name="message" placeholder="Enter your message" /></div>
+                <div class="sendButton">
+                  <button type="submit"><i class="far fa-paper-plane"></i></button>
+                </div>
+              </form>
+
+              <h2 class="no_message">Open a conversation</h2>
+            </div>
+          </div>
+        </div>
+    </main>
+
+    <script>
+      const conversation_topBar = document.querySelector(".conversation .topBar");
+      const conversation_messages = document.querySelector(".conversation .messages");
+      const conversation_sendMessage = document.querySelector(".conversation .sendMessage");
+      const conversation_placeholder = document.querySelector(".conversation .no_message");
+
+      const conversation_topBar_username_container = document.querySelector(".conversation .topBar .user_avatar_and_name .username")
+      const conversation_topBar_avatar = document.querySelector(".conversation .topBar .user_avatar_and_name .userAvatar img")
+
+      const loggedInUserId = "<%= loggedInUser._id %>";
+      const loggedInUsername = "<%= loggedInUser.name %>";
+
+      let participant = null;
+      let creator = null;
+      let current_conversation_id;
+
+      // for fetching the messages and showing them up in the conversation area
+      async function getMessages(conversation_Id, currentConversationName) {
+        try {
+          const res = await fetch(`/inbox/messages/${conversation_Id}`, {
+            method: "GET",
+            headers: { "Content-Type": "application/json" },
+          });
+          const body = await res.json();
+
+          // to add an active conversation to the first conversation so the user can understand which
+          // conversation is opened
+          const conversations = document.querySelectorAll(".conversationsList .single_conversation")
+
+          conversations.forEach((conversation) => {
+            conversation.classList.remove("active-conversation")
+          })
+
+          if (res.ok && !body.errors && body.data) {
+            conversation_placeholder.style.display = "none";
+            conversation_messages.style.display = "block";
+            conversation_sendMessage.style.display = "grid";
+            conversation_topBar.style.display = "flex";
+
+            const { data, user, conversation_id } = body;
+
+            participant = data.participant;
+            creator = data.creator;
+            current_conversation_id = conversation_id;
+
+            if (data.messages) {
+              let allMessages = "";
+
+              if (data.messages.length > 0) {
+                data.messages.forEach((message) => {
+                  let senderAvatar = message.sender.avatar
+                    ? `./uploads/avatars/${message.sender.avatar}`
+                    : "./assets/nophoto.png";
+                  const messageClass = message.sender._id === loggedInUserId ? "you-message" : "other-message";
+                  const showAvatar = message.sender._id === loggedInUserId ? "" : `<img src="${senderAvatar}" alt="${message.sender.name}" />`;
+
+                  let attachments = "<div class='attachmentsContainer'>";
+
+                  if (message.attachment && message.attachment.length > 0) {
+                    message.attachment.forEach((att) => {
+                      attachments += `
+                        <img
+                          onclick="showFullImg('./uploads/attachments/${att}')"
+                          src="./uploads/attachments/${att}" alt="${att}"
+                        />
+                      `
+                    })
+                  }
+
+                  attachments += "</div>"
+
+                  let messageHTML = `
+                  <div class="message ${messageClass}">
+                    <div class="messageContent">
+                      <div class="avatar">
+                        ${showAvatar}
+                      </div>
+                      <div class="messageText">${message.text}</div>
+                    </div>
+                    ${attachments}
+                    <div class="message-time">${moment(message.date_time).fromNow()}</div>
+                  </div >
+                `
+
+                  allMessages += messageHTML;
+
+                  // insert all the messages
+                  conversation_messages.innerHTML = allMessages;
+
+                  // scroll the bottom of the section
+                  conversation_messages.scrollTo(0, conversation_messages.scrollHeight)
+                });
+              } else if (data.messages.length === 0) {
+                conversation_messages.innerHTML = "<h2 class='start-message'>Start Chatting</h2>"
+              }
+
+              conversation_topBar_username_container.textContent = currentConversationName
+              conversation_topBar_avatar.src = participant._id.toString() === loggedInUserId.toString() ?
+                creator.avatar ? `./uploads/avatars/${creator.avatar}` : "./assets/nophoto.png" :
+                participant.avatar ? `./uploads/avatars/${participant.avatar}` : "./assets/nophoto.png"
+
+              // adding an active class so the user can which is the current chat
+              conversations.forEach((conversation) => {
+                if (conversation.id === conversation_Id) {
+                  conversation.classList.add("active-conversation")
+                }
+              })
+            }
+          } else {
+            console.log(body.errors)
+            Swal.fire({
+              position: "center",
+              icon: "error",
+              title: body.errors.common.msg || "Unknown error occurred",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+          }
+        } catch (err) {
+          Swal.fire({
+            position: "center",
+            icon: "error",
+            title: err.message || "Unexpected Error occurred",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
+      }
+
+      const form = document.querySelector("form.sendMessage")
+
+      // for handling for submit and sending a message
+      form.onsubmit = async function (e) {
+        e.preventDefault()
+
+        const formData = new FormData(form)
+
+        formData.append("receiverId", participant._id)
+        formData.append("receiverName", participant.name)
+        formData.append("avatar", participant.avatar)
+        formData.append("conversationId", current_conversation_id)
+
+        if (formData.get("message") !== "") {
+          try {
+            const res = await fetch("/inbox/message", {
+              method: "POST",
+              body: formData
+            })
+            const body = await res.json()
+
+            if (!body.errors) {
+              form.reset()
+            } else {
+              Swal.fire({
+                position: "center",
+                icon: "error",
+                title: body.errors.avatar.msg || body.errors.common.msg || "Unknown error occurred",
+                showConfirmButton: false,
+                timer: 1500,
+              });
+            }
+          } catch (err) {
+            console.error(err.message)
+          }
+        }
+      }
+
+      // for opening the most recent conversation once the page has been loaded
+      window.onload = async () => {
+        const res = await fetch("/inbox/getConversationsInJSONformat")
+        const [conversation] = await res.json()
+
+        if (conversation) {
+          getMessages(conversation._id, "<%= loggedInUser._id %>".toString() === conversation.creator._id.toString() ? conversation.participant.name : conversation.creator.name)
+        }
+      }
+    </script>
+</body>
+
+</html>

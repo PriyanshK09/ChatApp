@@ -1,0 +1,300 @@
+@import url("https://fonts.googleapis.com/css2?family=Rubik&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+Mono&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  font-family: Rubik;
+  outline: none;
+  text-decoration: none;
+}
+
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #b8cfe680;
+  border-radius: 100px;
+}
+
+body {
+  background: #242936;
+  color: #cccac2;
+  height: 100vh;
+  overflow: hidden;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+button,
+a,
+li,
+img {
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+
+h1,
+h2,
+h3,
+p,
+span,
+a {
+  font-weight: 300;
+}
+
+button {
+  cursor: pointer;
+}
+
+main {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-rows: 60px 1fr;
+      grid-template-rows: 60px 1fr;
+  height: 100%;
+}
+
+nav {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  padding: 5px 0;
+  background: #1a1f29;
+  border-bottom: 1px solid #242936;
+}
+
+nav .nav_title {
+  color: #f29e74;
+  font-family: Jetbrains Mono;
+}
+
+nav .nav_links {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+nav .nav_links li {
+  list-style: none;
+  margin-right: 20px;
+  position: relative;
+}
+
+nav .nav_links li:last-child {
+  margin-right: 0;
+}
+
+nav .nav_links li:hover .sub_list {
+  -webkit-transform: scaleY(1);
+          transform: scaleY(1);
+  visibility: visible;
+}
+
+nav .nav_links li .sub_list {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  width: 250px;
+  background: #1f2831;
+  border-radius: 5px;
+  overflow: hidden;
+  -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.363);
+          box-shadow: 0 5px 10px rgba(0, 0, 0, 0.363);
+  -webkit-transform-origin: top;
+          transform-origin: top;
+  -webkit-transform: scaleY(0);
+          transform: scaleY(0);
+  visibility: hidden;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+
+nav .nav_links li .sub_list li {
+  cursor: pointer;
+  width: 100%;
+  padding: 20px;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+  border-bottom: 1px solid #b8cfe680;
+}
+
+nav .nav_links li .sub_list li:last-child {
+  border-bottom: none;
+}
+
+nav .nav_links li .sub_list li:hover {
+  background: #111722;
+}
+
+nav .nav_links li img {
+  display: block;
+  width: 35px;
+  height: 35px;
+  -o-object-fit: cover;
+     object-fit: cover;
+  border-radius: 100%;
+  cursor: pointer;
+}
+
+nav .nav_links li:last-child {
+  margin-right: none;
+}
+
+nav .nav_links li a {
+  color: #cccac2;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+  letter-spacing: 0.5px;
+}
+
+nav .nav_links li a:hover {
+  color: #95e6cb;
+}
+
+.sign_in_page_content_container {
+  height: 100%;
+  display: -ms-grid;
+  display: grid;
+  place-items: center;
+}
+
+.sign_in_page_content_container .sign_in_form {
+  width: 100%;
+  max-width: 400px;
+  padding: 30px;
+  border-radius: 5px;
+  background: #1a1f29;
+  -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.419);
+          box-shadow: 0 5px 10px rgba(0, 0, 0, 0.419);
+}
+
+.sign_in_page_content_container .sign_in_form h2.sign_in_form_header {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #95e6cb;
+  font-family: Noto Sans Mono;
+}
+
+.sign_in_page_content_container .sign_in_form form.fields_container {
+  width: 100%;
+}
+
+.sign_in_page_content_container .sign_in_form form.fields_container .single_field {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.sign_in_page_content_container .sign_in_form form.fields_container .single_field input,
+.sign_in_page_content_container .sign_in_form form.fields_container .single_field button {
+  width: 100%;
+  padding: 10px;
+  border-radius: 3px;
+  border: none;
+}
+
+.sign_in_page_content_container .sign_in_form form.fields_container .single_field input {
+  border: 2px solid #fff;
+}
+
+.sign_in_page_content_container .sign_in_form form.fields_container .single_field input:focus {
+  border-color: #95e6cb;
+}
+
+.sign_in_page_content_container .sign_in_form form.fields_container .single_field button {
+  background: #95e6cb;
+  border: none;
+  color: #fff;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+  padding: 10px;
+  cursor: pointer;
+  text-align: center;
+}
+
+.sign_in_page_content_container .sign_in_form form.fields_container .single_field button:hover {
+  background: #30cf9a;
+}
+
+.sign_in_page_content_container .sign_in_form form.fields_container .single_field button:active {
+  -webkit-transform: scale(0.95);
+          transform: scale(0.95);
+}
+
+.sign_in_page_content_container .sign_in_form form.fields_container .single_field .error {
+  font-size: 0.8rem;
+  color: #f07178;
+  margin-top: 5px;
+}
+
+.sign_in_page_content_container .sign_in_form .form_footer {
+  text-align: center;
+}
+
+.sign_in_page_content_container .sign_in_form .form_footer a {
+  color: #f29e74;
+}
+
+.error_page_content_container {
+  height: 100%;
+  display: -ms-grid;
+  display: grid;
+  place-items: center;
+  overflow-x: auto;
+}
+
+.error_page_content_container .error_page_content {
+  width: 100%;
+  max-width: 300px;
+}
+
+.error_page_content_container .error_page_content .error_image {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.error_page_content_container .error_page_content .error_image img {
+  width: 100%;
+}
+
+.error_page_content_container .error_page_content .error_message_and_status {
+  text-align: center;
+}
+
+.error_page_content_container .error_page_content .error_message_and_status h2 {
+  color: #f29e74;
+  margin-bottom: 10px;
+}
+
+.content {
+  overflow-x: hidden;
+}
+
+@media screen and (max-width: 768px) {
+  * {
+    cursor: default !important;
+  }
+}
+/*# sourceMappingURL=style.css.map */

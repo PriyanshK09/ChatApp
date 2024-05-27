@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include("./partials/head.ejs") %>
+  </head>
+  <body>
+    <main>
+      <%- include("./partials/nav.ejs") %>
+      <div class="content">
+        <div class="sign_in_page_content_container">
+          <div class="sign_in_form">
+            <h2 class="sign_in_form_header">Sign In</h2>
+            <form class="fields_container" method="post" action="/">
+              <div class="single_field">
+                <input autofocus value="<%= data.email %>" name="email" placeholder="Enter your email" />
+                <% if(errors.email) { %>
+                <p class="error"><%= errors.email.msg %></p>
+                <% } %>
+              </div>
+              <div class="single_field">
+                <input
+                  name="password"
+                  type="password"
+                  value="<%= data.password %>"
+                  placeholder="Enter your password"
+                />
+                <% if(errors.password) { %>
+                <p class="error"><%= errors.password.msg %></p>
+                <% } %>
+              </div>
+              <div class="single_field">
+                <button type="submit">Sign in</button>
+                <% if(errors.common) { %>
+                <p class="error"><%= errors.common.msg %></p>
+                <% } %>
+              </div>
+            </form>
+
+            <p class="form_footer">Don't have any account? <a href="/signup">Register</a></p>
+          </div>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

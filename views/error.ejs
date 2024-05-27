@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include("./partials/head.ejs") %>
+  </head>
+  <body>
+    <main>
+      <%- include("./partials/nav.ejs") %>
+      <div class="content">
+        <div class="error_page_content_container">
+          <div class="error_page_content">
+            <div class="error_image">
+              <img src="./assets/not-found.svg" alt="Illustration" />
+            </div>
+            <div class="error_message_and_status">
+              <h2><%= error.status %></h2>
+              <p><%= error.message %></p>
+              <pre><code><%= error.stack %></code></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>
